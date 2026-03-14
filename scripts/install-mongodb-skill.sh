@@ -19,6 +19,12 @@ unzip -q "$TEMP_DIR/repo.zip" -d "$TEMP_DIR"
 # Create skills directory if it doesn't exist
 mkdir -p ~/.claude/skills
 
+# Remove existing installation if present (file, directory, or symlink)
+if [ -e ~/.claude/skills/mongodb-connection ] || [ -L ~/.claude/skills/mongodb-connection ]; then
+    echo "🗑️  Removing existing installation..."
+    rm -rf ~/.claude/skills/mongodb-connection
+fi
+
 # Copy the skill (GitHub extracts install branch to agent-skills-install/)
 echo "📋 Copying skill to ~/.claude/skills/mongodb-connection..."
 cp -r "$TEMP_DIR/agent-skills-install/skills/mongodb-connection" ~/.claude/skills/
